@@ -1,0 +1,27 @@
+{
+  "name": "proyecto_js_distrital_2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-browserify": "^3.12.0",
+    "express": "^4.18.2",
+    "firestore": "^1.1.6",
+    "mysql2": "^3.4.0",
+    "react-hook-form": "^7.45.1"
+  },
+  "keywords": [],
+  "description": "",
+  "devDependencies": {
+    "@babel/core": "^7.22.8",
+    "@babel/preset-env": "^7.22.7",
+    "@babel/preset-react": "^7.22.5",
+    "babel-loader": "^9.1.3",
+    "webpack-cli": "^5.1.4"
+  }
+}
