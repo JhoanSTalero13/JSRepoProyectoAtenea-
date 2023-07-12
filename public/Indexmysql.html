@@ -31,16 +31,17 @@
 <link rel="stylesheet" href="css/owl.theme.default.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
 
-<script type="text/javascript" src="requestdoctor.js"></script>
-<script type="text/javascript" src="requestpaciente.js"></script>
-<script type="text/javascript" src="requestcitas.js"></script>
-<script type="text/javascript" src="requestespecialidades.js"></script>
-
+<script type="text/javascript" src="/public/js/funtion.js"></script>
+<!-- Agrega el siguiente script en tu HTML -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Agrega el siguiente script en tu HTML -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
 </head>
 
 <body>
-	<div class="header_section">
+  <div class="header_section">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		   <div class="logo"><a href="index.html"><img src="images/logo.png"></a></div>
 		   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,11 +75,11 @@
 		</nav>
 	 </div>
 	<br>
- <div class="titulo"> <h1>Registro de citas</h1>
-    <div class ="doctor"> <h2> Formulario Doctor</h2>
+  <div class="titulo"> <h1>Registro de citas</h1> 
+     <div class ="doctor"> <h2> Formulario Doctor</h2>
 		<form class="form_doctor">
 			<label for="idDoctor">ID Doctor:</label>
-			<input type="number" id="idPaciente"><br><br>
+			<input type="number" id="idPaciente" readonly><br><br>
 			<label for="nombreDoctor">Nombre Doctor:</label>
 			<input type="text" id="nombreDoctor" name="nombreDoctor"><br><br>
 			<label for="apellidoDoctor">Apellido Doctor:</label>
@@ -87,30 +88,33 @@
 			<br>
 			<br>
 			<select id="especialidad" name="especialidad">
-			  <option value="Medicina general">Medicina general</option>
-			  <option value="Cardiología">Cardiología</option>
-			  <option value="Medicina interna">Medicina interna</option>
-			  <option value="Dermatología">Dermatología.</option>
-			  <option value="Rehabilitación física">Rehabilitación física</option>
-			  <option value="Psicología">Psicología.</option>
-			  <option value="Odontología">Odontología.</option>
-			  <option value="Radiología">Radiología.</option>
+			  <option value="1">Medicina general</option>
+			  <option value="2">Cardiología</option>
+			  <option value="3">Medicina interna</option>
+			  <option value="4">Dermatología.</option>
+			  <option value="5">Rehabilitación física</option>
+			  <option value="6">Psicología.</option>
+			  <option value="7">Odontología.</option>
+			  <option value="8">Radiología.</option>
 			  <!-- Agrega las opciones restantes Dermatología., Rehabilitación física., Psicología., Odontología., Radiología. -->
 			</select><br><br>
 			<label for="consultorioDoctor">consultorio Doctor:</label>
 			<input type="text" id="consultorio" name="consultorio"><br><br>
 			<label for="emailDoctor">Email Doctor:</label>
 			<input type="email" id="correoContacto" name="correoContacto"><br><br>
-			<button style="background-color: rgb(192, 200, 245)">GUARDAR DOCTOR</button>
-	        <button style="background-color: rgb(192, 200, 245)">ACTUALIZAR DOCTOR</button>
-	        <button style="background-color: rgb(192, 200, 245)">TRAER DOCTOR</button>
-
-	</div>
-	<br>
-	<div class="paciente"><h2> Formulario Paciente</h2>
+			<button onclick="guardarDoctor()" style="background-color: rgb(192, 200, 245)">GUARDAR DOCTOR</button>
+      <button onclick="actualizarDoctor()" style="background-color: rgb(192, 200, 245)">ACTUALIZAR DOCTOR</button>
+      <button onclick="leerDoctor()" style="background-color: rgb(192, 200, 245)">TRAER DOCTOR</button>
+      <div id="listadoctores">
+        <br>
+      </div> 		
+    </form>
+	  </div>
+	 <br>
+	 <div class="paciente"><h2> Formulario Paciente</h2>
 	<form id="form_paciente">	
-	<label for="idPaciente">ID Paciente:</label>
-	<input type="number" id="idPaciente"><br><br>
+	<label for="idPaciente" >ID Paciente:</label>
+	<input type="number" id="idPaciente" readonly><br><br>
 	<label for="nombrePaciente">Nombre Paciente:</label>
 	<input type="text" id="nombrePaciente" maxlength="3"><br><br>
 	<label for="apellidoPaciente">Apellido Paciente:</label>
@@ -118,61 +122,49 @@
 	<label for="correoPaciente">Correo de contacto:</label>
 	<label for="fechaNacimiento">Fecha de Nacimiento:</label>
 	<input type="date" id="fechaNacimiento" name="fechaNacimiento" min="1990-01-01" max="2023-07-31" onchange="calcularEdad()">
-	<label id="labelEdad"></label>
+	<label id="edadPaciente"></label>
     <br>
-	<button style="background-color: rgb(192, 200, 245)">guardar paciente</button>
-	<button style="background-color: rgb(192, 200, 245)">ACTUALIZAR </button>
-	<button style="background-color: rgb(192, 200, 245)">Traer paciente</button> 
-    </form>
-	</div>
-    <div class="citas"><h2>Formulario Citas</h2> 
+	  <button type="button" style="background-color: rgb(192, 200, 245)" onclick="guardarPacientes()">Guardar Paciente</button>
+    <button type="button" style="background-color: rgb(192, 200, 245)" onclick="actualizarPacientes()">Actualizar Paciente</button>
+    <button type="button" style="background-color: rgb(192, 200, 245)" onclick="leerPacientes()">Traer Paciente</button> 
+    <div id="listapacientes">
+			<br>
+		</div> 
+   </form>
+	  </div>
+     <div class="citas"><h2>Formulario Citas</h2> 
      <form class="form_citas">
 	 <label for="idCita">ID Citas</label>
-	 <input type="number" id="idCitas"><br><br>
+	 <input type="number" id="idCitas" readonly><br><br>
 	 <label for="idPaciente">ID Paciente:</label>
 	 <input type="number" id="idPaciente"><br><br>
 	 <label for="idDoctor">ID Doctor:</label>
 	 <input type="number" id="idPaciente"><br><br>
 	 <label for="especialidad">Especialidad citas:</label>
 	 <br>
-	<br>
+	 <br>
 	 <select id="especialidad" name="especialidad">
-		<option value="Medicina general">Medicina general</option>
-		<option value="Cardiología">Cardiología</option>
-		<option value="Medicina interna">Medicina interna</option>
-		<option value="Dermatología">Dermatología.</option>
-		<option value="Rehabilitación física">Rehabilitación física</option>
-		<option value="Psicología">Psicología.</option>
-		<option value="Odontología">Odontología.</option>
-		<option value="Radiología">Radiología.</option>
+		<option value="1">Medicina general</option>
+		<option value="2">Cardiología</option>
+		<option value="3">Medicina interna</option>
+		<option value="4">Dermatología.</option>
+		<option value="5">Rehabilitación física</option>
+		<option value="6">Psicología.</option>
+		<option value="7">Odontología.</option>
+		<option value="8">Radiología.</option>
 		<!-- Agrega las opciones restantes Dermatología., Rehabilitación física., Psicología., Odontología., Radiología. -->
 	  </select><br><br>
-	  <button type="submit" style="background-color: rgb(192, 200, 245)">Cargar Citas</button>
-	  <button  style="background-color: rgb(192, 200, 245)">GUARDAR CITA</button>
-	  <button  style="background-color: rgb(192, 200, 245)" >ACTUALIZAR CITA</button>
-	  <button  style="background-color: rgb(192, 200, 245)">TRAER CITA</button>
-	 </form>
+     <button onclick="guardarCita()" style="background-color: rgb(192, 200, 245)">GUARDAR CITA</button>
+     <button onclick="actualizarCita()" style="background-color: rgb(192, 200, 245)">ACTUALIZAR CITA</button>
+     <button onclick="leerCita()" style="background-color: rgb(192, 200, 245)">TRAER CITA</button>
+     <div id="listacitas">
+			<br>
+		</div> 
+    </form>
      <br>
 	 <br>
-	 <table id="citas-table">
-		<thead>
-		  <tr>
-			<th>Id Cita</th>
-			<th>id Paciente </th>
-			<th>id Doctor </th>
-			<th>especialidad de la citas </th>
-			<!-- Agrega más columnas según la estructura de tu tabla de citas -->
-		  </tr>
-		</thead>
-		<tbody id="citas-body">
-		  <!-- Aquí se insertarán las filas de citas -->
-		</tbody>
-	  </table>
-
-	  
-
 	 
-	</div>
+     </div>
   </div>
  
     <br>
@@ -235,41 +227,8 @@
 	</div>
 
 	<script>
-		const citasForm = document.getElementById('form_citas');
-		const citasTable = document.getElementById('citas-table');
-		const citasBody = document.getElementById('citas-body');
-	
-		citasForm.addEventListener('submit', (event) => {
-		  event.preventDefault();
-	
-		  fetch('/api/citas')
-			.then(response => response.json())
-			.then(citas => {
-			  // Eliminar filas de citas previas
-			  while (citasBody.firstChild) {
-				citasBody.removeChild(citasBody.firstChild);
-			  }
-	
-			  // Agregar filas de citas desde los resultados obtenidos
-			  citas.forEach(cita => {
-				const row = document.createElement('tr');
-				row.innerHTML = `
-				  <td>${cita.id}</td>
-				  <td>${cita.fecha}</td>
-				  <td>${cita.descripcion}</td>
-				  <!-- Agrega más celdas según la estructura de tu tabla de citas -->
-				`;
-				citasBody.appendChild(row);
-			  });
-	
-			  // Mostrar la tabla de citas
-			  citasTable.style.display = 'table';
-			})
-			.catch(error => {
-			  console.error('Error al obtener las citas:', error);
-			});
-		});
-	function calcularEdad() {
+		
+	  function calcularEdad() {
     const inputFechaNacimiento = document.getElementById('fechaNacimiento');
     const fechaNacimiento = new Date(inputFechaNacimiento.value);
     const hoy = new Date();
@@ -279,6 +238,7 @@
   
     document.getElementById('labelEdad').textContent = `Edad: ${diffAnios} años`;
   }
-	  </script>
+     
+	</script>
 </body>
 </html>

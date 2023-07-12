@@ -13,7 +13,7 @@ const connection = require('./dbmysql');
 
 app.use(express.json());
 
-app.get('/api/citas', (req, res) => {
+app.get('/api/citas/all', (req, res) => {
     const query = 'SELECT * FROM citas';
     connection.query(query, (err, results) => {
       if (err) {
@@ -25,7 +25,7 @@ app.get('/api/citas', (req, res) => {
     });
   });
 
-app.post('/api/citas', (req, res) => {
+app.post('/api/citas/save', (req, res) => {
     const { doctorId, pacienteId, especialidadId } = req.body;
     const query = 'INSERT INTO citas (doctor_id, paciente_id, especialidad_id) VALUES (?, ?, ?)';
     const values = [doctorId, pacienteId, especialidadId];
@@ -40,7 +40,7 @@ app.post('/api/citas', (req, res) => {
     });
   });
   
-app.put('/api/citas/:id', (req, res) => {
+app.put('/api/citas/update/:id', (req, res) => {
     const citaId = req.params.id;
     const { doctorId, pacienteId, especialidadId } = req.body;
     const query = 'UPDATE citas SET doctor_id = ?, paciente_id = ?, especialidad_id = ? WHERE cita_id = ?';
@@ -74,70 +74,70 @@ app.delete('/api/citas/:id', (req, res) => {
       }
     });
   });
-
-app.get('/api/pacientes', (req, res) => {
-  const query = 'SELECT * FROM pacientes';
-  connection.query(query, (err, results) => {
-    if (err) {
-      console.error('Error al obtener los pacientes de MySQL', err);
-      res.status(500).send('Error al obtener los pacientes');
-    } else {
-      res.send(results);
-    }
+  
+app.get('/api/pacientes/all', (req, res) => {
+    const query = 'SELECT * FROM pacientes';
+    connection.query(query, (err, results) => {
+      if (err) {
+        console.error('Error al obtener los pacientes de MySQL', err);
+        res.status(500).send('Error al obtener los pacientes');
+      } else {
+        res.send(results);
+      }
+    });
   });
+  
+app.post('/api/pacientes/save', (req, res) => {
+    const { nombre, cedula, apellido, edad, telefono } = req.body;
+    const query = 'INSERT INTO pacientes (nombre, cedula, apellido, edad, telefono) VALUES (?, ?, ?, ?, ?)';
+    const values = [nombre, cedula, apellido, edad, telefono];
+  
+    connection.query(query, values, (err, results) => {
+      if (err) {
+        console.error('Error al agregar el paciente en MySQL', err);
+        res.status(500).send('Error al agregar el paciente');
+      } else {
+        res.send('Paciente agregado exitosamente');
+      }
     });
-
-app.post('/api/pacientes', (req, res) => {
-      const { nombre, cedula, apellido, edad, telefono } = req.body;
-      const query = 'INSERT INTO pacientes (nombre, cedula, apellido, edad, telefono) VALUES (?, ?, ?, ?, ?)';
-      const values = [nombre, cedula, apellido, edad, telefono];
-    
-      connection.query(query, values, (err, results) => {
-        if (err) {
-          console.error('Error al agregar el paciente en MySQL', err);
-          res.status(500).send('Error al agregar el paciente');
-        } else {
-          res.send('Paciente agregado exitosamente');
-        }
-      });
+  });
+  
+app.put('/api/pacientes/update/:id', (req, res) => {
+    const pacienteId = req.params.id;
+    const { nombre, cedula, apellido, edad, telefono } = req.body;
+    const query = 'UPDATE pacientes SET nombre = ?, cedula = ?, apellido = ?, edad = ?, telefono = ? WHERE paciente_id = ?';
+    const values = [nombre, cedula, apellido, edad, telefono, pacienteId];
+  
+    connection.query(query, values, (err, results) => {
+      if (err) {
+        console.error('Error al actualizar el paciente en MySQL', err);
+        res.status(500).send('Error al actualizar el paciente');
+      } else if (results.affectedRows === 0) {
+        res.status(404).send('Paciente no encontrado');
+      } else {
+        res.send('Paciente actualizado exitosamente');
+      }
     });
-    
-app.put('/pacientes/:id', (req, res) => {
-  const pacienteId = req.params.id;
-  const { nombre, cedula, apellido, edad, telefono } = req.body;
-  const query = 'UPDATE pacientes SET nombre = ?, cedula = ?, apellido = ?, edad = ?, telefono = ? WHERE paciente_id = ?';
-  const values = [nombre, cedula, apellido, edad, telefono, pacienteId];
-    
-      connection.query(query, values, (err, results) => {
-        if (err) {
-          console.error('Error al actualizar el paciente en MySQL', err);
-          res.status(500).send('Error al actualizar el paciente');
-        } else if (results.affectedRows === 0) {
-          res.status(404).send('Paciente no encontrado');
-        } else {
-          res.send('Paciente actualizado exitosamente');
-        }
-      });
+  });
+  
+  app.delete('/api/pacientes/:id', (req, res) => {
+    const pacienteId = req.params.id;
+    const query = 'DELETE FROM pacientes WHERE paciente_id = ?';
+    const values = [pacienteId];
+  
+    connection.query(query, values, (err, results) => {
+      if (err) {
+        console.error('Error al eliminar el paciente en MySQL', err);
+        res.status(500).send('Error al eliminar el paciente');
+      } else if (results.affectedRows === 0) {
+        res.status(404).send('Paciente no encontrado');
+      } else {
+        res.send('Paciente eliminado exitosamente');
+      }
     });
+  });
     
-app.delete('/api/pacientes/:id', (req, res) => {
-  const pacienteId = req.params.id;
-  const query = 'DELETE FROM pacientes WHERE paciente_id = ?';
-  const values = [pacienteId];
-    
-  connection.query(query, values, (err, results) => {
-        if (err) {
-          console.error('Error al eliminar el paciente en MySQL', err);
-          res.status(500).send('Error al eliminar el paciente');
-        } else if (results.affectedRows === 0) {
-          res.status(404).send('Paciente no encontrado');
-        } else {
-          res.send('Paciente eliminado exitosamente');
-        }
-      });
-    });
-    
-app.get('/api/doctores', (req, res) => {
+app.get('/api/doctores/all', (req, res) => {
       const query = 'SELECT * FROM doctores';
       connection.query(query, (err, results) => {
         if (err) {
@@ -149,7 +149,7 @@ app.get('/api/doctores', (req, res) => {
       });
     });
     
-app.post('/api/doctores', (req, res) => {
+app.post('/api/doctores/save', (req, res) => {
       const { nombre, apellido, especialidad, consultorio, correo_contacto } = req.body;
       const query = 'INSERT INTO doctores (nombre, apellido, especialidad, consultorio, correo_contacto) VALUES (?, ?, ?, ?, ?)';
       const values = [nombre, apellido, especialidad, consultorio, correo_contacto];
@@ -164,7 +164,7 @@ app.post('/api/doctores', (req, res) => {
       });
     });
 
-app.put('/api/doctores/:id', (req, res) => {
+app.put('/api/doctores/update/:id', (req, res) => {
       const idDoctor = req.params.id;
       const { nombre, apellido, especialidad, consultorio, correo_contacto } = req.body;
       const query = 'UPDATE doctores SET nombre = ?, apellido = ?, especialidad = ?, consultorio = ?, correo_contacto = ? WHERE id_doctor = ?';
