@@ -75,3 +75,13 @@ Esquema de la base de datos
 ![image](https://github.com/JhoanSTalero13/JSRepoProyectoAtenea-/assets/114318104/aeca98b4-a756-40ea-8d67-23e28dc5ca33)
 
 
+Estructura proyecto JS
+
+Utilizando Js, Html, css, node js, bootstrap 
+
+los archivos base son:
+-index.js
+-indexMysql.html
+-config.js
+-dbmysql.js 
+
