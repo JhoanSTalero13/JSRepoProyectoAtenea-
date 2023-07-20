@@ -90,10 +90,9 @@ configuracion de la conexion de la base datos
 Para esto necesitamos configurar e instalar mysql para realizarlo, abrimos una terminal por consola y ejecutamos npm install mysql12
 
 luego creamos la conexion utilizando Js
-
+{
 //llamamos una constaste llamado mysql y que requiera el complemneto instalado mysql12
 const mysql = require('mysql2');
-
 //luego creamos una conexion
 const connection = mysql.createConnection({
   host: 'localhost', // Cambia esto si tu base de datos está alojada en otro servidor
@@ -113,7 +112,9 @@ connection.connect((err) => {
 });
 //el valor que será exportado desde el módulo actual
 module.exports = connection;
-_____________________________________________________________________
+}
+
+___________________________________________________________________
 
 
 
