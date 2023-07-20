@@ -84,4 +84,36 @@ los archivos base son:
 -indexMysql.html
 -config.js
 -dbmysql.js 
+![image](https://github.com/JhoanSTalero13/JSRepoProyectoAtenea-/assets/114318104/eeb50584-60be-4979-bf91-8e30cd0ba537)
+___________________________________________________________________________
+configuracion de la conexion de la base datos 
+Para esto necesitamos configurar e instalar mysql para realizarlo, abrimos una terminal por consola y ejecutamos npm install mysql12
+
+luego creamos la conexion utilizando Js
+
+//llamamos una constaste llamado mysql y que requiera el complemneto instalado mysql12
+const mysql = require('mysql2');
+
+//luego creamos una conexion
+const connection = mysql.createConnection({
+  host: 'localhost', // Cambia esto si tu base de datos está alojada en otro servidor
+  user: 'root', // Reemplaza con tu usuario de MySQL
+  password: 'admin', // Reemplaza con tu contraseña de MySQL
+  database: 'dbcitas', // Reemplaza con el nombre de tu base de datos
+});
+//y al conectarse con la base de datos genera error realiza lo siguiente 
+connection.connect((err) => {
+//si es error imprimir que hay un error para conectarse con la base de datos
+  if (err) {
+    console.error('Error al conectar a MySQL', err);
+// si no conexion éxitosa
+  } else {
+    console.log('Conexión exitosa a MySQL');
+  }
+});
+//el valor que será exportado desde el módulo actual
+module.exports = connection;
+_____________________________________________________________________
+
+
 
