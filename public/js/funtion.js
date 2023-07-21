@@ -1,7 +1,7 @@
 function leerDoctores(){
     //FUNCION GET
         $.ajax({    
-            url : 'http://localhost:3000/api/doctores/all',
+            url : 'http://localhost:3000/api/doctores',
             type : 'GET',
             dataType : 'json',
     
@@ -40,7 +40,7 @@ function guardarDoctor() {
     
     
         $.ajax({    
-            url : 'http://localhost:3000/api/doctores/save',
+            url : 'http://localhost:3000/api/doctores',
             type : 'POST',
          //   dataType : 'json',
             data:dataToSend,
@@ -81,7 +81,7 @@ function actualizarDoctor(idDoctor) {
         let dataToSend = JSON.stringify(data);
       
         $.ajax({
-          url: 'http://localhost:3000/api/doctores/' + idDoctor,
+          url: 'http://localhost:3000/api/doctores' + idDoctor,
           type: 'PUT',
           data: dataToSend,
           contentType: 'application/json',
@@ -121,7 +121,7 @@ function eliminarDoctor(idDoctor) {
    
 function leerPacientes() {
       $.ajax({
-        url: 'http://localhost:3000/api/pacientes/all',
+        url: 'http://localhost:3000/api/pacientes',
         type: 'GET',
         dataType: 'json',
         success: function(pacientes) {
@@ -157,7 +157,7 @@ function guardarPacientes() {
       let dataToSend = JSON.stringify(data);
     
       $.ajax({
-        url: 'http://localhost:3000/api/pacientes/save',
+        url: 'http://localhost:3000/api/pacientes',
         type: 'POST',
         data: dataToSend,
         contentType: 'application/json',
@@ -196,7 +196,7 @@ function actualizarPacientes(idPaciente) {
       let dataToSend = JSON.stringify(data);
     
       $.ajax({
-        url: 'http://localhost:3000/api/pacientes/update/' + idPaciente,
+        url: 'http://localhost:3000/api/pacientes/' + idPaciente,
         type: 'PUT',
         data: dataToSend,
         contentType: 'application/json',
@@ -234,7 +234,7 @@ function eliminarPacientes(idPaciente) {
     }
 function leerCitas() {
         $.ajax({
-          url: 'http://localhost:3000/api/citas/all',
+          url: 'http://localhost:3000/api/citas',
           type: 'GET',
           dataType: 'json',
           success: function(citas) {
@@ -266,7 +266,7 @@ function guardarCitas() {
         let dataToSend = JSON.stringify(data);
       
         $.ajax({
-          url: 'http://localhost:3000/api/citas/save',
+          url: 'http://localhost:3000/api/citas',
           type: 'POST',
           data: dataToSend,
           contentType: 'application/json',
@@ -299,7 +299,7 @@ function actualizarCitas(idCitas) {
         let dataToSend = JSON.stringify(data);
       
         $.ajax({
-          url: 'http://localhost:3000/api/citas/update/' + idCitas,
+          url: 'http://localhost:3000/api/citas/' + idCitas,
           type: 'PUT',
           data: dataToSend,
           contentType: 'application/json',
