@@ -157,3 +157,11 @@ app.get('/api/citas/all', (req, res) => {
       }
     });
   });
+![image](https://github.com/JhoanSTalero13/JSRepoProyectoAtenea-/assets/114318104/b6f3c7b9-cf8a-4537-bed8-05c3d8a95603)
+
+![image](https://github.com/JhoanSTalero13/JSRepoProyectoAtenea-/assets/114318104/31d9dd74-5e2c-41ae-9ff6-625649264b8e)
+
+![image](https://github.com/JhoanSTalero13/JSRepoProyectoAtenea-/assets/114318104/5634af35-8e94-4aea-918f-9ccb2777cc4a)
+
+![image](https://github.com/JhoanSTalero13/JSRepoProyectoAtenea-/assets/114318104/d9153d79-bb5a-46e1-bdac-069340ebce65)
+
