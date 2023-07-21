@@ -129,5 +129,31 @@ module.exports = connection;
 
 ___________________________________________________________________
 
+en la parte de index.js la configuracion es:
 
+//servidor donde se conecta la BD con la peticion atraves de los endpoints
+const express = require('express');
+const app = express();
+const path = require('path');
+const config = require('./config.js');
+const router = express.Router();
+const connection = require('./dbmysql');
 
+___________________________________________________________________________
+//este codigo es para que la peticiones a traves de Json funcionen
+app.use(express.json());
+
+// este codigo para que cuando se haga la petición a travez de la url, usando el get de consulta para mirar que todos las citas registradas  
+app.get('/api/citas/all', (req, res) => {
+//en este codigo se realiza la consulta select para traer todo de las citas
+    const query = 'SELECT * FROM citas';
+//en este codigo gestiona los resulatados de la conexion con la base de datos y los endpoints en este caso get
+    connection.query(query, (err, results) => {
+      if (err) {
+        console.error('Error al obtener las citas de MySQL', err);
+        res.status(500).send('Error al obtener las citas');
+      } else {
+        res.send(results);
+      }
+    });
+  });
