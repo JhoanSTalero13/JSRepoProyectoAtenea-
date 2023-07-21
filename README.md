@@ -3,6 +3,9 @@ Repositorio atenea del proyecto de atenea js, node js, css y html
 
 Revisar la raiz master
 
+![image](https://github.com/JhoanSTalero13/JSRepoProyectoAtenea-/assets/114318104/05237207-1683-4527-9103-904f7468f481)
+
+
 Proyecto creado y trabajado por Jhoan Sebastian Talero Alarcon para el proyecto Atenea - Universidad Distrial Jose Franscisco de Caldas
 
 Objetivo
