@@ -81,7 +81,7 @@ function actualizarDoctor(idDoctor) {
         let dataToSend = JSON.stringify(data);
       
         $.ajax({
-          url: 'http://localhost:3000/api/doctores' + idDoctor,
+          url: 'http://localhost:3000/api/doctores/' + idDoctor,
           type: 'PUT',
           data: dataToSend,
           contentType: 'application/json',
